@@ -1,0 +1,46 @@
+h3 {
+    font-size: 18px;
+    color: #FFFFFF;
+}
+.hacking-datetime {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    min-height: 200px;
+}
+@-webkit-keyframes spin {
+	from {-webkit-transform:rotate(0deg);}
+	to {-webkit-transform:rotate(360deg);}
+}
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}
+.hacking-datetime::after {
+    content:'';
+    display:block;
+    position:absolute;
+    left:48%;top:40%;
+    width:30px;height:30px;
+    border-style:solid;
+    border-color:#fff;
+    border-top-color:transparent;
+    border-width: 2px;
+    border-radius:50%;
+    -webkit-animation: spin .8s linear infinite;
+    animation: spin .8s linear infinite;
+    z-index: -1;
+}
+.btn.btn-date-cancel {
+    color: #FFFFFF;
+    background: #141F33;
+    border-radius: 5px;
+}
+.btn.btn-date-confirm {
+    color: #FFFFFF;
+    background: #2050CC;
+    border-radius: 5px;
+}
+  
+  

@@ -1,0 +1,46 @@
+<h2 mat-dialog-title class="text-white text-center">
+    Choose Event Type
+    <mat-icon class="float-right" (click)="close()">close</mat-icon>
+</h2>
+<mat-dialog-content class="mat-typography">
+    <ng-template #spin>
+        <div class="d-flex justify-content-center py-3"><mat-spinner color="primary" diameter="24"></mat-spinner></div>
+    </ng-template>
+    <div class="row" *ngIf="!loading; else spin">
+        <div class="col-6 col-md-4 mb-3" *ngFor="let event of eventTypes.default">
+            <button class="btn btn-block btn-event" [ngClass]="{'btn-event-action': event == data}" [mat-dialog-close]="event" cdkFocusInitial>{{event}}</button>
+        </div>
+        <div class="col-6 col-md-4 mb-3" *ngFor="let custom of eventTypes.custom; let index = index;">
+            <a class="btn-block btn-event-custom position-relative d-flex align-items-center px-3" [ngClass]="{'btn-event-action': custom.properties.alias == data}">
+                <ng-container *ngIf="!custom.actions.saving">
+                    <mat-icon (click)="delEvent(custom)">remove_circle_outline</mat-icon>
+
+                    <button *ngIf="!custom.actions.editing" class="btn btn-block text-truncate text-white" style="font-size: 14px" [mat-dialog-close]="custom.properties.alias" cdkFcusInitial>{{custom.properties.alias}}</button>
+                    <mat-icon *ngIf="!custom.actions.editing" (click)="editEvent(custom)">edit</mat-icon>
+
+                    <input autoFocus
+                    *ngIf="custom.actions.editing" 
+                    type="text" 
+                    value="{{custom.properties.alias}}" 
+                    name="{{custom.id}}" 
+                    class="form-control"
+                    [ngClass]="{'input-error': !custom.actions.valid}" 
+                    (blur)="saveCustom(custom, $event.target.value)" 
+                    (keyup.enter)="saveCustom(custom, $event.target.value)">
+                    <mat-icon *ngIf="custom.actions.editing" for="{{custom.id}}" class="second">check_circle</mat-icon>
+                </ng-container>
+                
+                <span *ngIf="custom.actions.saving" class="btn-mask">
+                    <mat-spinner color="primary" diameter="16"></mat-spinner>
+                </span>
+            </a>
+                
+        </div>
+        <div class="col-6 col-md-4 mb-3">
+            <button class="btn btn-block btn-event-custom" (click)="addEvent()">
+                <mat-spinner *ngIf="adding" color="primary" diameter="20"></mat-spinner>
+                <mat-icon *ngIf="!adding" class="second">add_circle</mat-icon>
+            </button>
+        </div>
+    </div>
+</mat-dialog-content> 
